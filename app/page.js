@@ -14,7 +14,7 @@ export default function Home() {
   const audioRef = useRef(null);
   const blockYesUntilRef = useRef(0);
 
-  const moveNoButton = () => {
+  const moveNoButton = (playAudio = true) => {
     const area = areaRef.current;
     const btn = noBtnRef.current;
     const yesBtn = yesBtnRef.current;
@@ -24,30 +24,37 @@ export default function Home() {
     const maxY = area.clientHeight - btn.offsetHeight;
     if (maxX <= 0 || maxY <= 0) return;
 
-    const nextX = Math.random() * maxX;
-    const nextY = Math.random() * maxY;
-
-    btn.style.left = `${nextX}px`;
-    btn.style.top = `${nextY}px`;
-    btn.style.opacity = "1";
-
-    if (yesBtn) {
-      const yesRect = yesBtn.getBoundingClientRect();
-      const areaRect = area.getBoundingClientRect();
-      const left = areaRect.left + nextX;
-      const top = areaRect.top + nextY;
+    const yesRect = yesBtn ? yesBtn.getBoundingClientRect() : null;
+    const areaRect = area.getBoundingClientRect();
+    const overlapsYes = (x, y) => {
+      if (!yesRect) return false;
+      const left = areaRect.left + x;
+      const top = areaRect.top + y;
       const right = left + btn.offsetWidth;
       const bottom = top + btn.offsetHeight;
-      const overlap = !(
+      return !(
         right < yesRect.left ||
         left > yesRect.right ||
         bottom < yesRect.top ||
         top > yesRect.bottom
       );
-      btn.style.zIndex = overlap ? "5" : "3";
-    }
+    };
 
-    enableAudio();
+    let nextX = 0;
+    let nextY = 0;
+    let attempts = 0;
+    do {
+      nextX = Math.random() * maxX;
+      nextY = Math.random() * maxY;
+      attempts += 1;
+    } while (attempts < 24 && overlapsYes(nextX, nextY));
+
+    btn.style.left = `${nextX}px`;
+    btn.style.top = `${nextY}px`;
+    btn.style.opacity = "1";
+    if (playAudio) {
+      enableAudio();
+    }
   };
 
   useEffect(() => {
@@ -67,7 +74,7 @@ export default function Home() {
   useEffect(() => {
     if (!showResult) {
       requestAnimationFrame(() => {
-        moveNoButton();
+        moveNoButton(false);
       });
     }
   }, [showResult]);
@@ -92,7 +99,7 @@ export default function Home() {
     event.preventDefault();
     event.stopPropagation();
     blockYesUntilRef.current = Date.now() + 350;
-    moveNoButton();
+    moveNoButton(true);
   };
 
   const toggleAudio = () => {
