@@ -7,7 +7,8 @@
 html,
 body,
 #__next {
-  height: 100dvh;
+  height: 100%;
+  min-height: 100svh;
   background-color: #f9b9d3;
   background-image: radial-gradient(circle at top, #ffe0f0, #f9b9d3 45%, #f3a5c8);
   background-attachment: fixed;
@@ -15,7 +16,7 @@ body,
 
 body {
   margin: 0;
-  height: 100dvh;
+  height: 100%;
   font-family: "Poppins", "Segoe UI", system-ui, -apple-system, sans-serif;
   color: #231f20;
   display: grid;
@@ -27,12 +28,15 @@ body {
 
 .page {
   width: 100%;
-  min-height: 100dvh;
+  height: 100svh;
   display: flex;
   align-items: center;
   justify-content: center;
   position: relative;
-  padding: 16px;
+  padding: calc(12px + env(safe-area-inset-top))
+    calc(12px + env(safe-area-inset-right))
+    calc(12px + env(safe-area-inset-bottom))
+    calc(12px + env(safe-area-inset-left));
   background: transparent;
 }
 
@@ -173,6 +177,8 @@ h1 {
 @media (max-width: 560px) {
   .card {
     padding: 24px 20px 28px;
+    max-height: 92svh;
+    overflow: hidden;
   }
 
   .question-card,
@@ -191,6 +197,13 @@ h1 {
 
   .result-card p {
     font-size: 1.1rem;
+  }
+
+  .poster {
+    max-height: 45svh;
+    width: auto;
+    max-width: 100%;
+    margin-bottom: 18px;
   }
 }
 
