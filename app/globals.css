@@ -1,0 +1,225 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap");
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#__next {
+  height: 100%;
+  background-color: #f9b9d3;
+  background-image: radial-gradient(circle at top, #ffe0f0, #f9b9d3 45%, #f3a5c8);
+  background-attachment: fixed;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: "Poppins", "Segoe UI", system-ui, -apple-system, sans-serif;
+  color: #231f20;
+  display: grid;
+  place-items: center;
+  overscroll-behavior: none;
+}
+
+.page {
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  padding: 16px 0;
+  background: transparent;
+}
+
+.glow {
+  position: absolute;
+  inset: -40% 10% auto;
+  height: 320px;
+  background: radial-gradient(
+    circle,
+    rgba(255, 255, 255, 0.8) 0%,
+    rgba(255, 255, 255, 0) 70%
+  );
+  filter: blur(10px);
+  z-index: 0;
+  animation: float 6s ease-in-out infinite;
+}
+
+.card {
+  position: relative;
+  z-index: 1;
+  background: rgba(255, 255, 255, 0.86);
+  border-radius: 28px;
+  padding: 30px 30px 32px;
+  text-align: center;
+  box-shadow: 0 22px 60px rgba(0, 0, 0, 0.18);
+  backdrop-filter: blur(6px);
+  margin: 0 auto;
+}
+
+.question-card {
+  width: min(680px, 94vw);
+}
+
+.result-card {
+  width: min(760px, 96vw);
+  padding: 40px 36px 44px;
+  animation: pop 0.35s ease;
+}
+
+.poster {
+  width: 100%;
+  max-width: 360px;
+  border-radius: 18px;
+  box-shadow: 0 16px 30px rgba(0, 0, 0, 0.2);
+  margin: 0 auto 24px;
+  display: block;
+}
+
+h1 {
+  font-size: clamp(1.5rem, 2.6vw, 2.1rem);
+  margin: 0 0 26px;
+}
+
+.buttons-area {
+  position: relative;
+  height: 120px;
+  margin-bottom: 26px;
+  display: flex;
+  justify-content: center;
+}
+
+.btn {
+  border: none;
+  border-radius: 999px;
+  height: 44px;
+  padding: 0 28px;
+  font-size: 1rem;
+  line-height: 1;
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  font-weight: 600;
+}
+
+.btn:hover {
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.16);
+}
+
+.btn:disabled {
+  opacity: 0.6;
+  cursor: default;
+  transform: none;
+  box-shadow: none;
+}
+
+.btn-yes {
+  background: linear-gradient(135deg, #4de2ff, #2f69ff);
+  color: #fff;
+}
+
+.btn-no {
+  position: absolute;
+  left: 0;
+  top: 0;
+  transform: none;
+  background: linear-gradient(135deg, #ff7a7a, #e63b59);
+  color: #fff;
+  z-index: 3;
+  touch-action: manipulation;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.result-card img {
+  width: 100%;
+  max-width: 520px;
+  border-radius: 18px;
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.22);
+}
+
+.result-card p {
+  margin: 16px 0 0;
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-12px);
+  }
+}
+
+@keyframes pop {
+  0% {
+    transform: scale(0.96);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@media (max-width: 560px) {
+  .card {
+    padding: 24px 20px 28px;
+  }
+
+  .question-card,
+  .result-card {
+    width: min(92vw, 520px);
+  }
+
+  .buttons-area {
+    height: 130px;
+    margin-bottom: 20px;
+  }
+
+  .result-card {
+    padding: 30px 22px 32px;
+  }
+
+  .result-card p {
+    font-size: 1.1rem;
+  }
+}
+
+.audio-control {
+  position: fixed;
+  right: 18px;
+  bottom: 18px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 10px;
+  background: rgba(0, 0, 0, 0.35);
+  border-radius: 999px;
+  backdrop-filter: blur(6px);
+  z-index: 10;
+}
+
+.audio-toggle {
+  width: 34px;
+  height: 34px;
+  border: none;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.85);
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+.audio-toggle.on {
+  background: rgba(255, 255, 255, 1);
+}
+
+.audio-range {
+  width: 90px;
+}
