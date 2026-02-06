@@ -6,6 +6,7 @@ export default function Home() {
   const [showResult, setShowResult] = useState(false);
   const [isTouch, setIsTouch] = useState(false);
   const [audioEnabled, setAudioEnabled] = useState(false);
+  const [audioPausedByUser, setAudioPausedByUser] = useState(false);
   const [volume, setVolume] = useState(0.6);
   const areaRef = useRef(null);
   const noBtnRef = useRef(null);
@@ -65,11 +66,13 @@ export default function Home() {
   }, [showResult]);
 
   const enableAudio = () => {
+    if (audioPausedByUser) return;
     const audio = audioRef.current;
     if (!audio) return;
     audio.muted = false;
     audio.volume = volume;
     audio.play().catch(() => {});
+    setAudioEnabled(true);
   };
 
   const handleYesClick = () => {
@@ -88,6 +91,7 @@ export default function Home() {
   const toggleAudio = () => {
     const next = !audioEnabled;
     setAudioEnabled(next);
+    setAudioPausedByUser(!next);
     const audio = audioRef.current;
     if (!audio) return;
     audio.muted = !next;
@@ -160,7 +164,16 @@ export default function Home() {
           onClick={toggleAudio}
           aria-pressed={audioEnabled}
         >
-          {audioEnabled ? "⏸" : "▶"}
+          {audioEnabled ? (
+            <svg className="audio-icon" viewBox="0 0 24 24" aria-hidden="true">
+              <rect x="6" y="5" width="4" height="14" rx="1.5" />
+              <rect x="14" y="5" width="4" height="14" rx="1.5" />
+            </svg>
+          ) : (
+            <svg className="audio-icon" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M8 5.6v12.8a1.2 1.2 0 0 0 1.8 1.04l9.2-6.4a1.2 1.2 0 0 0 0-2.08l-9.2-6.4A1.2 1.2 0 0 0 8 5.6z" />
+            </svg>
+          )}
         </button>
         <input
           className="audio-range"

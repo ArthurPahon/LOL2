@@ -7,7 +7,7 @@
 html,
 body,
 #__next {
-  height: 100%;
+  height: 100dvh;
   background-color: #f9b9d3;
   background-image: radial-gradient(circle at top, #ffe0f0, #f9b9d3 45%, #f3a5c8);
   background-attachment: fixed;
@@ -15,22 +15,24 @@ body,
 
 body {
   margin: 0;
-  min-height: 100vh;
+  height: 100dvh;
   font-family: "Poppins", "Segoe UI", system-ui, -apple-system, sans-serif;
   color: #231f20;
   display: grid;
   place-items: center;
   overscroll-behavior: none;
+  padding: 0;
+  overflow: hidden;
 }
 
 .page {
   width: 100%;
-  min-height: 100vh;
+  min-height: 100dvh;
   display: flex;
   align-items: center;
   justify-content: center;
   position: relative;
-  padding: 16px 0;
+  padding: 16px;
   background: transparent;
 }
 
@@ -213,11 +215,18 @@ h1 {
   border-radius: 50%;
   background: rgba(255, 255, 255, 0.85);
   cursor: pointer;
-  font-size: 1rem;
+  display: grid;
+  place-items: center;
 }
 
 .audio-toggle.on {
   background: rgba(255, 255, 255, 1);
+}
+
+.audio-icon {
+  width: 16px;
+  height: 16px;
+  fill: #1f1f1f;
 }
 
 .audio-range {
