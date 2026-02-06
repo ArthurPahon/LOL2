@@ -55,6 +55,13 @@ export default function Home() {
       window.matchMedia("(hover: none)").matches ||
       window.matchMedia("(pointer: coarse)").matches;
     setIsTouch(touch);
+    setAudioEnabled(false);
+    setAudioPausedByUser(false);
+    const audio = audioRef.current;
+    if (audio) {
+      audio.pause();
+      audio.muted = true;
+    }
   }, []);
 
   useEffect(() => {
