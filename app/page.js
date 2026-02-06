@@ -13,8 +13,13 @@ export default function Home() {
   const yesBtnRef = useRef(null);
   const audioRef = useRef(null);
   const blockYesUntilRef = useRef(0);
+  const lastMoveRef = useRef(0);
 
   const moveNoButton = (playAudio = true) => {
+    const now = Date.now();
+    if (now - lastMoveRef.current < 120) return;
+    lastMoveRef.current = now;
+
     const area = areaRef.current;
     const btn = noBtnRef.current;
     const yesBtn = yesBtnRef.current;
@@ -152,7 +157,6 @@ export default function Home() {
               type="button"
               ref={noBtnRef}
               onMouseEnter={!isTouch ? moveNoButton : undefined}
-              onMouseOver={!isTouch ? moveNoButton : undefined}
               onPointerDown={handleNoPress}
               onClick={handleNoPress}
               onTouchStart={handleNoPress}
